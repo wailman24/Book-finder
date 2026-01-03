@@ -12,4 +12,9 @@ class Book extends Model
         'isbn',
         'cover_url',
     ];
+
+    public function favoritedBy()
+    {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps();
+    }
 }

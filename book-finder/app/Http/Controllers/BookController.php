@@ -74,13 +74,23 @@ class BookController extends Controller
         }
     }
 
-    public function getSavedBooks()
+    public function getSavedBooks(Request $request)
     {
         try {
-            $books = Book::all();
+            $perPage = $request->input('per_page', 2);
+            $books = Book::paginate($perPage);
+
             return response()->json([
                 'status' => 'success',
-                'books' => BookResource::collection($books)
+                'books' => BookResource::collection($books), // transforms each book
+                'pagination' => [
+                    'current_page' => $books->currentPage(),
+                    'per_page' => $books->perPage(),
+                    'total' => $books->total(),
+                    'last_page' => $books->lastPage(),
+                    'next_page_url' => $books->nextPageUrl(),
+                    'prev_page_url' => $books->previousPageUrl(),
+                ]
             ], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Failed to fetch saved books', 'message' => $e->getMessage()], 400);
