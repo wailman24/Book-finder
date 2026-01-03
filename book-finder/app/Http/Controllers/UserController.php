@@ -19,16 +19,21 @@ class UserController extends Controller
 
             $user = User::create([
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'role' => 'user',
             ]);
 
-            return new UserResource($user);
+
+            return response()->json([
+                'status' => 'success',
+                'user' => new UserResource($user),
+            ], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Registration failed', 'message' => $e->getMessage()], 400);
         }
     }
 
-    public function login(Request $request)
+    public function Login(Request $request)
     {
         try {
             $request->validate([
@@ -42,7 +47,14 @@ class UserController extends Controller
                 return response()->json(['error' => 'Invalid credentials'], 401);
             }
 
-            return new UserResource($user);
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+
+            return response()->json([
+                'status' => 'success',
+                'user' => new UserResource($user),
+                'token' => $token,
+            ], 200);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Login failed', 'message' => $e->getMessage()], 400);
         }
