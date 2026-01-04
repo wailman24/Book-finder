@@ -77,7 +77,7 @@ class BookController extends Controller
     public function getSavedBooks(Request $request)
     {
         try {
-            $perPage = $request->input('per_page', 2);
+            $perPage = $request->input('per_page', 5);
             $books = Book::paginate($perPage);
 
             return response()->json([

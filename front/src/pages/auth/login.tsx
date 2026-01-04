@@ -16,7 +16,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:8080/api/login", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,9 +28,9 @@ export default function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // data.access_token and data.user must be returned by your Laravel controller
-        login(data.access_token, data.user);
-        navigate("/books");
+        console.log(data.token, data.user);
+        login(data.token, data.user);
+        navigate("/admin/books");
       } else {
         // Handle validation errors or unauthorized
         alert(data.message || "Invalid credentials");
