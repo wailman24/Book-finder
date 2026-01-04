@@ -189,16 +189,3 @@ docker exec bookfinder-app-1 php artisan test tests/Feature/FavoriteBooksTest.ph
 - **Pagination**: Efficient browsing of large book collections
 - **Error Handling**: User-friendly error messages
 
-## 📝 License
-
-This project is licensed under the MIT License.
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!
-
-## 📧 Contact
-
-Your Name - wailmansour24@gmail.com
-
-Project Link: [https://github.com/wailman24/book-finder](https://github.com/wailman24/book-finder)
